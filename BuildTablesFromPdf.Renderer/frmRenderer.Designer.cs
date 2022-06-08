@@ -34,6 +34,7 @@
             this.btnCheckAllPages = new System.Windows.Forms.Button();
             this.btnViewRawContent = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
+            this.fileOpen = new BuildTablesFromPdf.Renderer.FileOpen();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPageContent = new System.Windows.Forms.TextBox();
             this.txtPage = new System.Windows.Forms.TextBox();
@@ -48,10 +49,11 @@
             this.chkText = new System.Windows.Forms.CheckBox();
             this.chkParagraphs = new System.Windows.Forms.CheckBox();
             this.chkTables = new System.Windows.Forms.CheckBox();
-            this.chkLines = new System.Windows.Forms.CheckBox();
-            this.chkIgnoreWhiteLines = new System.Windows.Forms.CheckBox();
             this.chkShowParserInfo = new System.Windows.Forms.CheckBox();
-            this.fileOpen = new BuildTablesFromPdf.Renderer.FileOpen();
+            this.chkIgnoreWhiteLines = new System.Windows.Forms.CheckBox();
+            this.chkLines = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTolerance = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -65,6 +67,8 @@
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.txtTolerance);
+            this.splitContainer.Panel1.Controls.Add(this.label2);
             this.splitContainer.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer.Panel1.Controls.Add(this.btnHtmlExport);
             this.splitContainer.Panel1.Controls.Add(this.btnCheckAllPages);
@@ -93,7 +97,7 @@
             // 
             this.splitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.splitContainer.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer_Panel2_Paint);
-            this.splitContainer.Size = new System.Drawing.Size(695, 456);
+            this.splitContainer.Size = new System.Drawing.Size(695, 483);
             this.splitContainer.SplitterDistance = 311;
             this.splitContainer.TabIndex = 0;
             // 
@@ -151,6 +155,21 @@
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
+            // fileOpen
+            // 
+            this.fileOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fileOpen.BrowserCaption = "";
+            this.fileOpen.DefaultExtension = "";
+            this.fileOpen.FileFilters = "";
+            this.fileOpen.Folder = "";
+            this.fileOpen.Location = new System.Drawing.Point(12, 26);
+            this.fileOpen.Name = "fileOpen";
+            this.fileOpen.ReadOnly = false;
+            this.fileOpen.Size = new System.Drawing.Size(228, 20);
+            this.fileOpen.TabIndex = 6;
+            this.fileOpen.Value = null;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -169,7 +188,7 @@
             this.txtPageContent.Multiline = true;
             this.txtPageContent.Name = "txtPageContent";
             this.txtPageContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtPageContent.Size = new System.Drawing.Size(284, 188);
+            this.txtPageContent.Size = new System.Drawing.Size(284, 215);
             this.txtPageContent.TabIndex = 4;
             this.txtPageContent.WordWrap = false;
             // 
@@ -243,7 +262,7 @@
             // lblPageSummary
             // 
             this.lblPageSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPageSummary.Location = new System.Drawing.Point(12, 190);
+            this.lblPageSummary.Location = new System.Drawing.Point(12, 203);
             this.lblPageSummary.Name = "lblPageSummary";
             this.lblPageSummary.Size = new System.Drawing.Size(284, 17);
             this.lblPageSummary.TabIndex = 1;
@@ -297,18 +316,16 @@
             this.chkTables.UseVisualStyleBackColor = true;
             this.chkTables.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
             // 
-            // chkLines
+            // chkShowParserInfo
             // 
-            this.chkLines.AutoSize = true;
-            this.chkLines.Checked = true;
-            this.chkLines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkLines.Location = new System.Drawing.Point(12, 87);
-            this.chkLines.Name = "chkLines";
-            this.chkLines.Size = new System.Drawing.Size(51, 17);
-            this.chkLines.TabIndex = 0;
-            this.chkLines.Text = "Lines";
-            this.chkLines.UseVisualStyleBackColor = true;
-            this.chkLines.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
+            this.chkShowParserInfo.AutoSize = true;
+            this.chkShowParserInfo.Location = new System.Drawing.Point(143, 52);
+            this.chkShowParserInfo.Name = "chkShowParserInfo";
+            this.chkShowParserInfo.Size = new System.Drawing.Size(105, 17);
+            this.chkShowParserInfo.TabIndex = 0;
+            this.chkShowParserInfo.Text = "Show parser info";
+            this.chkShowParserInfo.UseVisualStyleBackColor = true;
+            this.chkShowParserInfo.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
             // 
             // chkIgnoreWhiteLines
             // 
@@ -323,38 +340,42 @@
             this.chkIgnoreWhiteLines.UseVisualStyleBackColor = true;
             this.chkIgnoreWhiteLines.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
             // 
-            // chkShowParserInfo
+            // chkLines
             // 
-            this.chkShowParserInfo.AutoSize = true;
-            this.chkShowParserInfo.Location = new System.Drawing.Point(143, 52);
-            this.chkShowParserInfo.Name = "chkShowParserInfo";
-            this.chkShowParserInfo.Size = new System.Drawing.Size(105, 17);
-            this.chkShowParserInfo.TabIndex = 0;
-            this.chkShowParserInfo.Text = "Show parser info";
-            this.chkShowParserInfo.UseVisualStyleBackColor = true;
-            this.chkShowParserInfo.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
+            this.chkLines.AutoSize = true;
+            this.chkLines.Checked = true;
+            this.chkLines.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkLines.Location = new System.Drawing.Point(12, 87);
+            this.chkLines.Name = "chkLines";
+            this.chkLines.Size = new System.Drawing.Size(51, 17);
+            this.chkLines.TabIndex = 0;
+            this.chkLines.Text = "Lines";
+            this.chkLines.UseVisualStyleBackColor = true;
+            this.chkLines.CheckedChanged += new System.EventHandler(this.chk_CheckedChanged);
             // 
-            // fileOpen
+            // label2
             // 
-            this.fileOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileOpen.BrowserCaption = "";
-            this.fileOpen.DefaultExtension = "";
-            this.fileOpen.FileFilters = "";
-            this.fileOpen.Folder = "";
-            this.fileOpen.Location = new System.Drawing.Point(12, 26);
-            this.fileOpen.Name = "fileOpen";
-            this.fileOpen.ReadOnly = false;
-            this.fileOpen.Size = new System.Drawing.Size(228, 20);
-            this.fileOpen.TabIndex = 6;
-            this.fileOpen.Value = null;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 180);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Tolerance";
+            // 
+            // txtTolerance
+            // 
+            this.txtTolerance.Location = new System.Drawing.Point(73, 177);
+            this.txtTolerance.Name = "txtTolerance";
+            this.txtTolerance.Size = new System.Drawing.Size(100, 20);
+            this.txtTolerance.TabIndex = 11;
+            this.txtTolerance.Text = "2";
             // 
             // frmRenderer
             // 
             this.AcceptButton = this.btnGo;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(695, 456);
+            this.ClientSize = new System.Drawing.Size(695, 483);
             this.Controls.Add(this.splitContainer);
             this.Name = "frmRenderer";
             this.Text = "Form1";
@@ -392,6 +413,8 @@
         private System.Windows.Forms.Button btnHtmlExport;
         private System.Windows.Forms.CheckBox chkIgnoreWhiteLines;
         private System.Windows.Forms.CheckBox chkShowParserInfo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtTolerance;
     }
 }
 
