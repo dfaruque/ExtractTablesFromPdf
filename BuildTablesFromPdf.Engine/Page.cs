@@ -49,7 +49,7 @@ namespace BuildTablesFromPdf.Engine
         public List<Paragraph> Paragraphs { get; set; }
 
         public List<IPageContent> Contents { get; set; }
-        
+
         public bool IsRefreshed { get { return JoinedLines != null; } }
 
 
@@ -67,6 +67,26 @@ namespace BuildTablesFromPdf.Engine
         public void DetermineTableStructures()
         {
             JoinedLines = JoinLines(AllLines);
+
+            //determine missing first horizontal line, in case of tables splitted into multiple pages
+            var joinedHorizontalLine0 = JoinedHorizontalLines
+                .Where(f => f.EndPoint.X - f.StartPoint.X > 600)
+                .OrderBy(_ => _.StartPoint.Y)
+                .FirstOrDefault();
+
+            if (joinedHorizontalLine0 != null)
+            {
+                var intersectedVerticalLines = JoinedVerticalLines.Where(f => f.StartPoint.Y <= joinedHorizontalLine0.StartPoint.Y
+                && f.EndPoint.Y >= joinedHorizontalLine0.StartPoint.Y);
+                if (intersectedVerticalLines.Count() > 1)
+                {
+                    var y = (float)intersectedVerticalLines.Min(m => m.StartPoint.Y);
+
+                    JoinedHorizontalLines.Add(new Line((float)joinedHorizontalLine0.StartPoint.X,
+                        (float)joinedHorizontalLine0.EndPoint.X,
+                        y, y));
+                }
+            }
 
             // Find table borders
             foreach (Line horizontalLine in JoinedHorizontalLines.OrderBy(_ => _.StartPoint.Y))
