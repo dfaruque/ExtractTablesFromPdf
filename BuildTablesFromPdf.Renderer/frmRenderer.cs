@@ -30,7 +30,7 @@ namespace BuildTablesFromPdf.Renderer
 
             fileOpen.Value = Properties.Settings.Default.FileName;
 
-            splitContainer.Panel2.MouseWheel += splitContainer_Panel2_MouseWheel;
+            //splitContainer.Panel2.MouseWheel += splitContainer_Panel2_MouseWheel;
         }
 
         private void ShowDocument(string fileName)
